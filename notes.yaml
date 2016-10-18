@@ -1,0 +1,618 @@
+# The first part of the stream can be converted to JSON by
+# ""ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load_file("notes.yaml"))' > notes.json""
+# TODO
+# * solve problem with ":"!
+# * find way to indicate language!
+
+--- # formalized
+# Definitions: Artificial Doctor Ontology (ArtDocOnto; "ad")
+- "@id": :relatedAnatomy
+  :domain:
+    - schema:MedicalTherapy
+    - schema:MedicalProcedure
+  :range:
+    - schema:AnatomicalStructure
+    - schema:AnatomicalSystem
+    - schema:SuperficialAnatomy
+# similar: :inverseOf: schema:relatedTherapy # TODO: use OWL!
+- "@id": :codingSystem #TODO: change (with RDF?, OWL?)!
+  :superclassOf: schema:codingSystem
+  :range:
+    - schema:Text
+    - :CodingSystem
+- "@id": :CodingSystem
+  "@type": schema:Thing
+- "@id": :desc
+  schema:sameAs: schema:description
+- "@id": :di
+  schema:sameAs: schema:typicalTest
+- "@id": :ind
+  schema:sameAs: schema:indication
+- "@id": :ki
+  schema:sameAs: schema:contraindication
+- "@id": :kl
+  schema:sameAs: schema:signOrSymptom
+- "@id": :ko # TODO: change schema.org!
+  :superclassOf: schema:possibleComplication
+  :range:
+    - schema:Text
+    - schema:MedicalCondition
+- "@id": :koVon
+  :inverseOf: :ko # TODO: use OWL!
+- "@id": :syn
+  schema:sameAs: schema:alternateName
+- "@id": :th
+  schema:sameAs: schema:possibleTreatment
+
+- "@id": :testedMaterial # cf. schema:tissueSample
+  :domain: schema:MedicalTest
+  :range: :Körpermaterial
+
+- "@id": :typeOf
+  :inverseOf: "@type" # TODO: how to express?
+
+# cf :kU and schema:PhysicalExam
+
+## Causes
+## TODO: much, no modelling of frequency distribution, agents, … possible at the moment
+- "@id": :SpontaneousCause
+  "@type": schema:MedicalCause
+- "@id": :Trauma
+  "@type": schema:MedicalCause
+- "@id": :IatrogenicCause
+  "@type": schema:MedicalCause
+- "@id": :AutoimmuneCause
+  "@type": schema:MedicalCause
+- "@id": :InfectiousCause
+  "@type": schema:MedicalCause
+
+# Contents
+## Neurology
+### Anamnesis
+- "@id": :neurologische_Anamnese
+  :asksFor:
+    # Existence and properties of:
+    - :Lähmung
+    - :Sensibilitätsstörung
+    - :Kopfschmerz
+    - :Krampfanfall
+    - :Schwindel
+    - :Schmerz
+    - :Synkope
+    - :Demenz
+    # Medizinische Vorgeschichte
+    - :neurologische_Vorerkrankungen
+    - :neurologische_Voroperationen
+    # Medikamente
+    # Familienanamnese
+    # Sozialanamnese
+- "@id": :Lähmung
+  "@type": schema:MedicalSymptom
+  :instanceProperties:
+    - :begin
+    - :developmentTime # oder 'acute', …?
+    - :localization
+    - :triggerEvent
+### Untersuchung
+- "@id": :neurologische_Untersuchung
+  :tests:
+    - :Muskeleigenreflexe
+    - :Fremdreflexe
+    - :Hirnstammreflexe
+    - :pathologische_Reflexe
+- "@id": :Muskeleigenreflexe
+  :hasPart:
+    - "@id": :Masseterreflex
+      :segment: :Ncl._n._trigemini
+    - "@id": Scapulohumeralreflex
+      :segment:
+        - C4
+        - C5
+        - C6 # TODO: better make an inline liste here!
+    - "@id": Biszepssehnenreflex
+      :abb: "BSR"
+    - "@id": :Brachioradialisreflex
+      :abb: "BBR"
+    - "@id": Trizepssehnenreflex
+      :abb: "TSR"
+    - "@id": Trömner-Zeichen
+    - "@id": Adduktorenreflex
+      :abb: "ADR"
+    - "@id": Patellasehnenreflex
+      :abb: "PSR"
+    - "@id": Tibialis-posterior-Reflex
+    - "@id": Achillessehnenreflex
+      :abb: "ASR"
+### Conditions
+- "@id": :Migräne
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Kopfschmerz # oft einseitig (betont), pulsierend oder pochend
+    - :Aura
+    - :Phonophobie
+    - :Photophobie
+    - :Übelkeit
+    - :Erbrechen
+  :ko:
+    - :Hirninfarkt
+- "@id": :Subarachnoidalblutung
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Kopfschmerz # „Vernichtungskopfschmerz“
+    - :Nackensteife
+- "@id": :Meningitis
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Kopfschmerz
+    - :Nackensteife
+
+## Hämatologie
+### Medical conditions
+- "@id": :Anämie
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Hb-Verminderung # vel: (TODO)
+    - :Hkt-Verminderung # vel:
+    - :Ery-Verminderung
+- "@id": :makrozytäre_Anämie
+  "@type": :Anämie
+- "@id": :Anämie_durch_Bildungsstörung
+  "@type": :Anämie
+- "@id": :hämolytische_Anämie
+  "@type": :Anämie
+  :kl:
+    - :Hämolysezeichen
+- "@id": :Hämolysezeichen
+  :typeOf:
+    - {:desc: "Erhöhung von LDH, α-HBDH und Serumeisen"}
+    - {:desc: "Verminderung der Ery-Überlebenszeit"}
+    - {:desc: "Erhöhung von indirektem Bilirubin, Urobilinogenurie"}
+    - {:desc: "Erhöhung der Retikulozyten"}
+- "@id": :korpuskuläre_hämolytische_Anämie
+  "@type": :hämolytische_Anämie
+- "@id": :extrakorpuskuläre_hämolytische_Anämie
+  "@type": :hämolytische_Anämie
+- "@id": :Blutungsanämie
+  "@type": :Anämie
+- "@id": :Anämie_durch_Verteilungsstörung
+  "@type": :Anämie
+
+- "@id": :Leukämie
+  "@type": schema:MedicalCondition
+- "@id": :aktue_Leukämie
+  "@type": :Leukämie
+- "@id": :ALL
+  :syn: akute lymphatische Leukämie
+  "@type": :akute_Leukämie
+- "@id": :AML
+  :syn: akute myeloische Leukämie
+  "@type": :akute_Leukämie
+- "@id": :chronische_Leukämie
+  "@type": :Leukömie
+- "@id": :Paraproteinämie
+  "@type": schema:MedicalCondition
+- "@id": :Lymphom
+  "@type": schema:MedicalCondition
+- "@id": :Non-Hodgkin-Lymphom
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Lymphknotenvergrößerungen
+    - :Splenomegalie
+    - :Hepatomegalie # seltener
+    - :extralymphatische_Raumforderungen
+- "@id": :IPI
+  :syn: International Prognostic Index
+  "@type":
+    - :score
+    - schema:MedicalRiskEstimator
+  :value:
+    :summands:
+      - :e1: :Ann_Arbor_stage
+        :op: :greater_or_equal_than
+        :e2: 3
+      - :e1: :number_of_extranodal_sites
+        :op: :greater_than
+        :e2: 1
+      - {:desc: "elevated serum LDH"} # TODO: formalize! {:e1: {:resultOf {"@type": :Konzentrationsbestimmung (schema:MedicalTest), :testedMaterial :Serum, :concentrationOf :LDH}}}
+      - :orTerms:
+          - {:desc: "Karnofsky-Index <= 60 %"}
+          - {:desc: "ECOG-Score >= 2"}
+      - {:desc: "age > 60 a"}
+  schema:estimatesRiskOf: :Non-Hodgkin-Lymphom
+- "@id": :B-Zell-Non-Hodgkin-Lymphom
+  "@type": :Non-Hodgkin-Lymphom
+- "@id": :FL
+  :syn: Follikuläres Lymphom
+  "@type": :B-Zell-Non-Hodgkin-Lymphom
+  schema:cause: {schema:name: "t(14;18)(q32;q21)", "@type": :Translokation, schema:causeOf: {schema:name: "Überexpression von bcl-2"}}
+- "@id": :MCL
+  :syn:
+    - mantle cell lymphoma
+    - Mantelzelllymphom
+  "@type": :B-Zell-Non-Hodgkin-Lymphom
+  schema:cause {schema:name: "t(11;14)(q13;q32)", "@type": :Translokation, schema:causeOf: {schema:name: "Überexpression von Cyclin-D1 über bcl1"}}
+  :kl:
+    - :extralymphatische_Raumforderungen # häufiger als bei :FL
+- "@id": :MM
+  :syn: Multiples Myelom
+  "@type": :B-Zell-Non-Hodgkin-Lymphom
+  schema:subtype:
+    - "Typ IgG" # 53 %
+    - "Typ IgA" # 25 %
+    - "Typ IgD" # 1 %
+    - "Typ Leichtketten" # 20 %
+    - "Typ asekretorische Myelom" # 1 %
+  :kl:
+    - {:desc: "> 10 % Plasmazellen im KM"}
+    - {:desc: "Nachweis monoklonalen Proteins in Serum oder Urin"}
+    - {:desc: "Endorganschaden nach CRAB-Kriterien"}
+  :ko:
+    - :AL-Amyloidose
+- "@id": :MGUS
+  :syn: Monoklonale Gammopathie unklarer Signifikanz
+  "@type": :Paraproteinämie
+  :kl: "MYD88-Gen-Mutation in B-Zellen" # bei 10 %
+  :ko: :AL-Amyloidose
+- "@id": :Amyloidose
+  "@type": schema:MedicalCondition
+- "@id": :AL-Amyloidose
+  "@type": :Amyloidose
+  schema:cause: {:desc: "Leichtketten"}
+  :kl:
+    - :Makroglossie
+    - :Blutung # periorbital
+    - :shoulder_pad_sign
+    - :nephrotisches_Syndrom
+    - :restriktive_Kardiomyopathie # 30 %
+- "@id": :ATTR-Amyloidose
+  "@type": :Amyloidose
+  schema:cause: {:desc: "mutiertes Transthyretin"}
+  schema:epidemiology: "bes. pt, jp, se, us"
+
+#### Hämostasiologie
+- "@id": :Koagulopathie
+  "@type": schema:MedicalCondition
+- "@id": :Hämophilie
+  "@type": :Koagulopathie
+
+### Drugs
+- "@id": :Bleomycin
+  schema:drugClass: :Zytostatika
+  schema:mechanismOfAction: "Interkalierung in die DNA, DNA-abhängige-Polymerase-Hemmung, in höheren Dosen DNA-Strangbrüche durch reaktive Sauerstoffradikale"
+  schema:seriousAdverseOutcome: :Lungenfibrose # kumulative Toxizität, dosislimitierend: v. a. bei Gesamtdosis > 300 mg, bei Radiatio, hochdosierter O2-Gabe, Alter < 15 oder > 65
+- "@id": :Antimetabolite
+  "@type": :Zytostatika
+- "@id": :Methotrexat
+  schema:drugClass: :Antimetabolite
+  schema:seriousAdverseOutcome: :makrozytäre_Anämie
+
+- "@id": :Mesalazin
+  "@type": schema:Drug
+
+## Orthopädie und Unfallchirurgie
+### Conditions
+- "@id": :Chrondrosarkom
+  "@type": schema:MedicalCondition
+  schema:epidemiology: hauptsächlich Männer
+
+## Pneumologie und Thoraxchirurgie
+### Procedures
+- "@id": :Bronchoskopie
+  "@type": schema:MedicalProcedure
+- "@id": :starre_Bronchoskopie
+  "@type": :Bronchoskopie
+  :ind: # auch bei Kindern
+    - :Fremdkörperaspiration
+    - :Lungenblutung # anhaltend/massiv
+- "@id": :flexible_Bronchoskopie
+  "@type": :Bronchoskopie
+- "@id": :Mediastinokopie
+  "@type": schema:MedicalProcedure
+- "@id": :kollare_Mediastinokopie
+  "@type": :Mediastinoskopie
+- "@id": :anteriore_Mediastinoskopie
+  "@type": :Mediastinoskopie
+- "@id": :Thorakoskopie
+  "@type": schema:MedicalProcedure
+- "@id": :VATS
+  :syn: video-assisted thoracoscopic surgery
+  "@type": schema:MedicalProcedure
+  :hasPart: :Thorakosopie
+- "@id": :Pleurapunktion
+  "@type": :MedicalProcedure
+- "@id": :Thoraxdrainage
+  "@type": schema:TherapeuticProcedure
+  schema:procedureType: schema:SurgicalProcedure
+  :ind:
+    - :Pneumothorax
+    - :Serothorax
+    - :Hämatothorax
+    - :Pleuraempyem
+    - :Pleuraerguss
+    - {:desc: "intraoperativ bei Thoraxoperation"}
+    - {:desc: "Versorgung bei Polytrauma, e.g. multiple Rippenfraktur"}
+- "@id": :Bülau-Drainage
+  "@type": :Thoraxdrainage
+  :relatedAnatomy:
+    - {:desc: "3., 4. oder 5. ICR in der vorderen Axillarlinie"} # xor: (TODO)
+    - {:desc: "5., 6. oder 7. ICR in der mittleren Axillarlinie"} # bei Hämatothorax
+- "@id": :Monaldi-Drainange
+  "@type": :Thoraxdrainage
+  :relatedAnatomy: {:desc: "2. ICR in der Medioclavikularlinie"}
+
+### Conditions
+- "@id": :Pleuraerguss
+  "@type": schema:MedicalCondition
+  schema:cause:
+    - :Lungenkarzinom # 40 %
+    - :Mammakarzinom # metastasiert; 25 %
+    - :malignes_Lymphom # 10 %
+    - :Ovarialkarzinom # 5 %; andere Malignome
+    - :Lungentuberkulose
+  :di:
+    - :Sono
+    - :RöTh
+    - :CT
+    - :Pleurapunktion
+    - :VATS
+  :kl: :Dyspnoe # bei größeren Ergüssen
+  :ko: :Pleuraempyem
+- "@id": :Pleuraempyem
+  "@type": schema:MedicalCondition
+  :th:
+    - :AB # möglichst gezielt
+    - :VATS
+- "@id": :Pneumothorax
+  "@type": schema:MedicalCondition
+  schema:cause:
+    - :SpontaneousCause
+    - :Trauma
+    - :IatrogenicCause
+  :ko:
+    - :Spannungspneumothorax
+    - :Serothorax
+    - :Hämatothorax
+    - :Pleuraempyem
+    - schema:InfectiousDisease
+
+- "@id": :Lungenblutung
+  "@type": schema:MedicalCondition
+  schema:cause:
+    - :Lungentuberkulose
+    - :Lungenkarzinom
+    - :Bronchiektasen
+    - :Bronchitis
+    - :Pneumonie
+    - :Lungenabszess
+  :kl:
+    - :Hämoptoe # vel: (TODO)
+    - :Hämoptyse
+
+- "@id": :COPD
+  :syn:
+    - chronic obstructive pulmonary disease
+    - chronisch-obstruktive Lungenkrankheit
+  "@type": schema:MedicalCondition
+  schema:cause:
+    - :Rauchen # 90 %; einige andere
+- "@id": :Lungenemphysem
+  "@type": schema:MedicalCondition
+  schema:cause:
+    - :Alpha-1-Antitrypsin-Mangel
+    - :COPD
+- "@id": :Asthma_bronchiale
+  "@type": schema:MedicalCondition
+  schema:stage:
+    - {:desc: "kontrolliert", schema:recognizinAuthority: {schema:name: "Global Initiative for Asthma"}} # 0 Punkte
+    - {:desc: "teilweise kontrolliert"} # 1–2 Punkte
+    - {:desc: "nicht kontrolliert"} # >= 3 Punkte
+- "@id": :GINA_control_score_value
+  "@type":
+    - :score
+    - schema:PropertyValue
+  :value:
+    :summands:
+      - "> 2x/Woche tagsüber Symptome"
+      - "Einschränkung von Aktivitäten"
+      - "nächtliche Symptome oder Erwachen"
+      - "> 2x/Woche Bedarf an Reliever/Notfallbehandlung"
+      - :orTerms:
+          - "FEV1 < 80 % des Sollwertes"
+          - "PEF (peek expiratory flow) < 80 % des persönlichen Bestwertes"
+      - ">= 1x/a Exazerbation"
+- "@id": :Pneumonie
+  "@type": schema:InfectiousDisease
+- "@id": :CAP
+  :syn: community-acquired pneumonia
+  "@type": :Pneumonie
+  schema:cause:
+    - :Streptococcus_pneumoniae # 40–50 %; vel: (TODO); non-exhaustive list (TODO)
+    - :Haemophilus_influenzae # 5–10 %
+    - :Mycoplasma_pneumoniae # 5–10 %
+    - :Enterobacteriaceae # 5–10 %
+    - :respiratorische_Viren # 5–10 %
+- "@id": :RS-Viren
+  "@type": :respiratorische_Viren
+- "@id": :Adenoviren
+  "@type": :respiratorische_Viren
+- "@id": :Influenzaviren
+  "@type": :respiratorische_Viren
+- "@id": :CRB-65-Score
+  "@type":
+    - :score
+    - schema:MedicalRiskEstimator
+  :value:
+    :summands:
+      - :confusion
+      - {:desc: "respiratory rate >= 30/min"}
+      - {:desc: "blood pressure systolic < 90 mmHg or diastolic < 60 mmHg"}
+      - {:desc: "age >= 65 a"}
+  schema:estimatesRiskOf: {:desc: "Sterblichkeitsrisiko bei CAP"}
+- "@id": :Tbc
+  :syn: Tuberkulose
+  "@type": schema:InfectiousDisease
+  schema:cause:
+    - :Mycobacterium_tuberculosis # > 95 %; vel (TODO)
+    - :Mycobacterium_bovis # und andere
+  schema:typicalTest:
+    - :THT
+    - :RöTh
+    - {"@type": schema:MedicalTest, :desc: "Erregerdiagnostik", :testedMaterial: [:Sputum, :Magensaft, :Bürstenbiopsat, :Lungenbiopsat, :Urin, :Liquor, :Pleurapunktat]} # vel (TODO)
+- "@id": :THT
+  :syn:
+    - Tuberkulin-Hauttest
+    - Intrakutantest nach Mendel-Mantoux
+  "@type": schema:DiagnosticProcedure
+  schema:usedToDiagnose: :Tbc # genauer: früherer Kontakt mit Tbc
+  schema:howPerformed: "Injektion 10 Einheiten Referenztuberkulin intrakutan in der Beugeseite des Unterarms"
+  schema:normalRange: "bei früherer Auseinandersetzung mit Tuberkulosebakterien nach 48–72 h Rötung und Induration, deren Durchmesser entscheidend ist" # s. a. Herold 2015, S. 416 (TODO)
+
+- "@id": :SBAS
+  :syn: schlafbezogene Atemstörung
+  "@type": schema:MedicalCondition
+  :ko:
+    - :HRST
+    - :arterielle_Hypertonie
+    - "Verschlechterung einer Herzinsuffizienz"
+    - :respiratorische_Globalinsuffizienz
+    - :pulmonale_Hypertonie
+    - :Cor_pulmonale
+    - :Polyglobulie
+    - :Herzinfarkt
+    - :Schlaganfall
+    - :Trauma # durch Unfall durch Sekundenschlaf 7-fach erhöhtes Risiko
+- "@id": :OSAS
+  "@type": :SBAS
+
+- "@id": :Sarkoidose
+  :syn: Morbus Besnier-Boeck-Schaumann # IPA: buːk
+  "@type": schema:MedicalCondition
+- "@id": :akute_Sarkoidose
+  :syn: Löfgren-Syndrom
+  "@type": :Sarkoidose
+  schema:epidemiology: junge Frauen # TODO: use new property and formalize!
+- "@id": :chronische_Sarkoidose # 90 % der Sarkoidosen (TODO)
+  "@type": :Sarkoidose
+  schema:subtype:
+    - "Typ 0: Normalbefund"
+    - "Typ I: bihiläre Lymphadenopathie" # :th: Abwarten und kontrolle
+    - "Typ II"
+    - "Typ III"
+    - "Typ IV"
+
+- "@id": :Karzinom
+  "@type": schema:MedicalCondition
+- "@id": :Lungenkarzinom
+  :syn: Bronchialkarzinom
+  "@type": :Karzinom
+- "@id": :SCLC
+  :syn:
+    - small-cell lung cancer
+    - kleinzelliges Lungenkarzinom
+  :kl:
+    - :concentration_of_CYFRA_21-1 # Tumormarker (TODO: formalize better!)
+- "@id": :Pancoast-Syndrom
+  "@type": :Lungenkarzinom
+  schema:code:
+    :codingSystem: :ICD-10-SGB-V_Version_1.3
+    schema:codeValue: C34.1
+  :ko: :Horner-Syndrom
+- "@id": :Horner-Syndrom
+  "@type": schema:MedicalCondition
+  :kl:
+    - :Miosis
+    - :Ptosis
+    - :Enophthalmus
+- "@id": :Lungenmetastase
+  "@type": :Karzinom
+  :koVon:
+    - :kolorektales_Karzinom
+    - :Nierenkarzinom
+    - :Hodenkarzinom
+    - :Knochenkarzinom
+    - :Hautkarzinom
+    - {:desc: "Karzinom im Kopf- oder Halsbereich"}
+
+## Nephrology
+- "@id": :Lebendimpfstoffimpfung
+  "@type": schema:MedicalTherapy
+  :ki:
+    schema:name: Z. n. Nierentransplantation
+- "@id": :Chronische_Niereninsuffizienz
+  "@type": schema:MedicalCondition
+  schema:code:
+    :codingSystem: :ICD-10-SGB-V_Version_1.3
+    schema:codeValue: N18.9
+  :th: :Nierenersatzbehandlung
+- "@id": :Nierenersatzbehandlung
+  "@type": schema:MedicalTherapy
+- "@id": :Hämodialyse
+  "@type": :Nierenersatzbehandlung
+  :syn: HD
+
+## Gastroenterologie
+- "@id": :Diarrhoe
+  "@type": schema:MedicalSymptom
+  :syn: Durchfall
+  :desc: "Eine Diarrhö liegt vor, wenn eines der folgenden Kriterien erfüllt wird:
+
+    Zu häufige Stuhlentleerung: Mehr als dreimal am Tag
+    Verminderung der Stuhlkonsistenz: Wassergehalt mehr als 75%
+    Vermehrte Stuhlmenge: Mehr als 200-250g pro Tag" # TODO: formalize! source: https://amboss.miamed.de/library#xid=6M0jpg
+
+## varia
+### Körpermaterialien
+- "@id": :Gewebe
+  "@type": :Körpermaterial
+- "@id": :Körperflüssigkeit
+  "@type": :Körpermaterial
+  :desc: "Körperflüssigkeiten, Sekrete, …"
+- "@id": :Transsudat
+  "@type": :Körperflüssigkeit
+  :desc: "im Gegensatz zu Exsudat: Gesamteiweiß (GE): <30 g/l (gelegentlich nach diuretischer Th. höher); GE-Pleura oder GE-Serum: <0,5 g/l; spezifische Gewicht: <1,016 g/ml; LDH: < 200 U/l; LDH-Pleura oder LDH-Serum: <0,6 U/l" # TODO: formalize!
+- "@id": :Exsudat
+  "@type": :Körperflüssigkeit
+  :desc: "im Gegensatzu zu Transsudat: alle >"
+- "@id": :Sputum
+  "@type": :Körpermaterial
+- "@id": :Magensaft
+  "@type": :Körperflüssigkeit
+- "@id": :Urin
+  "@type": :Körperflüssigkeit
+- "@id": :Liquor
+  "@type": :Körperflüssigkeit
+  :desc: "normal: klar, <4 Zellen/µL, Lactat 1.2–2.1mmol/L, Eiweiß 15–45mg/dL, Glucose 40–75mg/dL oder 60% des Blutwertes" # TODO: formalize!
+- "@id": :Blut
+  "@type": :Körperflüssigkeit
+- "@id": :Serum
+  "@type": :Körperflüssigkeit
+- "@id": :Plasma
+  "@type": :Körperflüssigkeit
+
+## Imaging
+- "@id": :Sono
+  "@type": schema:ImagingTest
+  schema:imagingTechnique: schema:Ultrasound
+- "@id": :Rö
+  "@type": schema:ImagingTest
+  schema:imagingTechnique: schema:XRay
+- "@id": :RöTh
+  "@type": :Rö
+- "@id": :CT
+  "@type": schema:ImagingTest
+  schema:imagingTechnique: schema:CT
+
+## Drugs
+- "@id": :antimikrobielles_Pharmaka
+  "@type": schema:DrugClass
+- "@id": :AB
+  :syn: Antibiotika
+  "@type": :antimikrobielle_Pharmaka
+- "@id": :Analgetika
+  "@type": schema:DrugClass
+- "@id": :Antiemetika
+  "@type": schema:DrugClass
+- "@id": :Zytostatika
+  "@type": schema:DrugClass
+
+...

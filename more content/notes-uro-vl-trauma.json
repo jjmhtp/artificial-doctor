@@ -1,0 +1,16 @@
+[
+  {
+    "@id": "Nierenverletzung",
+    "@type": "schema:MedicalCondition",
+    "grades": "I: Nierenkontusion mit subkapsulärem Hämatom, Nierenkapsel intakt; II: Parenchymeinriss < 1 cm; III: Parenchymeinriss > 1 cm; IV: ausgedehnte Parenchymverletzung mit Hohlsystembeteiligung; V: kompletter Nierenstielabriss oder totale Nierenparenchymzerreißung",
+    "schema:cause": [
+      "stumpfes_Nierentrauma",
+      "perforierendes_Nierentrauma"
+    ]
+  },
+  {
+    "schema:name": "Verletzung des Nierenbeckenkelchsystems",
+    "@type": "schema:MedicalCondition",
+    "th": "Harnableitung über Mono-J-Ureterkatheter"
+  }
+]

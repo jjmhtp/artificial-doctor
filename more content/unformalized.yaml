@@ -1,0 +1,104 @@
+# data in this file is not formalized
+
+--- # traumatology
+- schema:name: Advanced Trauma Life Support
+  :syn: ATLS
+  :desc: weltweites Ausbildungskonzept von American College of Surgeons
+- schema:name: Trauma Evaluation and Management
+  :syn: TEAM
+  :desc: auf ATLS basierend für Studenten in USA entwickelt
+
+Todesfälle nach Trauma zu drei Zeitpunkten:
+  - t: erste Sekunden bis Minuten nach Trauma
+    cause:
+      - schwere Verletzungen am ZNS
+      - schwere Verletzungen an zentralen Stellen des Kreislaufs
+    Verhinderung: höchstens in urbanem Umfeld möglich, eigentlich nur durch präventive Maßnahmen
+  - t: Minuten bis einigen Stunden nach Trauma
+    cause:
+      - epi- oder subdurale Hämatome
+      - Hämatopneumothorax
+      - Milzverletzungen
+      - Leberverletzungen
+      - Beckenfrakturen
+      - andre Verletzungen mit massivem Blutverlust
+    Verhinderung: hier setzt die Behandlung an, die durch TEAM verbessert werden soll in der sog. „golden hour of shock“
+  - t: einigen Tagen bis Wochen nach Trauma
+    cause:
+      - Sepsis
+      - Multiorganversagen
+    Verhinderung: großer Einfluss der vorausgegangenen Versorgung
+5 Regeln zum Traumamanagement:
+  - Treat first what kills first.
+  - Die Behandlung soll nicht auf eine definitive Diagnose warten.
+  - Untersuchung und Behandlung sollen mit vitalen Funktionen beginnen.
+  - Es ist keine Zeit zu verlieren.
+  - Dem Patienten sollen keine Zusätzlichen Schäden zugefügt werden.
+
+
+...
+--- # OSCE Orthopädie
+- "@id": :Drehmann-Zeichen
+  :desc: "testet die Möglichkeit der Innenrotation im Hüftgelenk (normal bis 40°)"
+- "@id": :Vierer-Zeichen
+  :desc: "testet die Möglichkeit der Abduktion im Hüftgelenk (normal Bildung einer „4“)"
+- "@id": :Thomas-Handgriff
+  :desc: "testet die Möglichkeit der Extension im Hüftgelenk (normal Rücken flach bei Flexion der Gegenseite)"
+
+
+# Krankheiten des Muskuloskelettalen Systems
+- Morbus Ahlbäck
+- Morbus Osgood-Schlatter
+- Osteomyelitis
+
+
+...
+--- # Anamnese und körperliche Untersuchung
+
+## Pulmonologie
+Anamnese:
+  Hauptsymptome bei Präsentation:
+  medizinische Vorgeschichte:
+  Medikamente:
+  Familienanamnese:
+  Sozialanamnese:
+    Nikotinkonsum:
+      - aktiv
+      - passiv
+  Berufsanamnese:
+      Exposition gegenüber Stäuben:
+        - anorganisch
+        - organisch
+körperliche Untersuchung:
+  Inspektion:
+    AZ u. EZ:
+    Thoraxdeformitäten:
+      - Fassthorax
+      - Pectus excavatum: {syn: Trichterbrust}
+      - Pectus carinatum: {syn: Hühnerbrust}
+      - Kyphoskoliose
+      - Voussure: {syn: Herzbuckel}
+    Hautveränderungen:
+      - Narben
+      - Effloreszenzen
+      - sog. Hautemphysem
+      - Trommelschlägelfinger
+      - Uhrglasnägel
+    Atmung:
+      - Atemfrequenz
+      - Atemtiefe
+      - Regelmäßigkeit der Atmung
+  Palpation:
+    Position der Trachea:
+    Atemexkursion:
+    Stimmfremitus:
+    Druckschmerzhaftigkeit:
+  Perkussion:
+  Auskultation:
+    Atemgeräusche:
+      - vesikuläres Atmen
+      - Bronchialatmen
+    Nebengeräusche:
+    Bronchophonie: '66'
+
+...

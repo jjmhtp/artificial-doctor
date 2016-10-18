@@ -1,0 +1,106 @@
+# 2015-07-16T09 M23 NUGS VL Urologische Traumatologie Khode(?)
+
+- "@id": :Nierenverletzung
+  "@type": schema:MedicalCondition
+  schema:stage:
+    - {schema:stageAsNumber: 1, :desc: "Nierenkontusion mit subkapsulärem Hämatom, Nierenkapsel intakt"}
+    - {schema:stageAsNumber: 2, :desc: "Parenchymeinriss < 1 cm"}
+    - {schema:stageAsNumber: 3, :desc: "Parenchymeinriss > 1 cm"}
+    - {schema:stageAsNumber: 4, :desc: "ausgedehnte Parenchymverletzung mit Hohlsystembeteiligung"}
+    - {schema:stageAsNumber: 5, :desc: "kompletter Nierenstielabriss oder totale Nierenparenchymzerreißung"}
+  schema:cause:
+    - :stumpfes_Nierentrauma # ca. 80 % (TODO); vel: (TODO)
+    - :perforierendes_Nierentrauma
+- schema:name: "Verletzung des Nierenbeckenkelchsystems"
+  "@type": :Nierenverletzung
+  :th: {:desc: "Harnableitung über Mono-J-Ureterkatheter"} # TODO: formalize
+- "@id": :Harnleiterabriss
+- "@id": :Harnblasenruptur
+  :desc: "intraperinoeal und extra-"
+- "@id": :extraperitoneale_Harnblasenruptur
+  :th: {:desc: "Harnableitung über Katheter"}
+- "@id": :Harnröhrenverletzung
+  "@type": schema:MedicalCondition
+  :desc: "intradiaphragmal – extra-"
+  :th:
+    - {:desc: "Schienung mit Katheter"} # präferiert
+    - :suprapubischer_Katheter
+    - {:desc: "primäre Rekonstruktion"} # OP, wenn schwerer, dies präferiert, sonst:
+    - {:desc: "OP nach 3–6 Monaten"}
+- "@id": :Penisfraktur
+  "@type": schema:MedicalCondition
+  :desc: "Anpralltrauma des eregierten Penis, oft während GV"
+  :ko:
+    - schema:InfectiousDisease
+    - :Penisdeviation
+
+# 2015-07-16T09:45 M23 NUGS VL Urologische Infektiologie
+- "@id": :HWI
+  :syn: Harnwegsinfekt
+  "@type": schema:InfectiousDisease
+  :desc: | # TODO: does this work like this?
+"aszendierend; (hämatogen); (lymphogen)
+community-acquired:
+E. coli
+Proteus
+Klebsiella
+Enterobacter faecalis
+Staph. saprophyticus
+
+…
+
+Anaerobier
+
+Mycobacterium tuberculosis"
+  :di: {:desc: ":Anam; :kU; U-Status; bei Kindern, wenn kontaminiert: suprapubische Punktion; Urinkultur"}
+- "@id": :unkomplizierter_HWI
+  "@type": :HWI
+  :desc: "nichts relevantes verkomplizierendes, s. Folien"
+  :th:
+    - :Fosfomycintrometamol # 1x 3000 mg; xor: (TODO: derive from schema:DoseSchedule!)
+    - :Ciprofloxacin # 3 d 1 x 500 mg; … (s. Folien)
+- "@id": :Urosepsis # CAVE!!!
+- "@id": :Prostatitis
+  :di:
+    - :Anam
+    - :kU
+    - :Sono # transrektal
+  schema:subtype:
+    - "Kategorie I: akut bakteriell"
+    - "Kategorie II: chronisch bakteriell"
+    - "Kategorie III: chronisch abakteriell"
+- "@id": :chronische_Prostatitis
+  "@type": :Prostatitis
+  :di: :Vier-Gläser-Probe # TODO: non-ASCII?
+- "@id": :Gonorrhoe
+  :th:
+    - :Ceftriaxon
+- "@id": :akute_Epdidydimitis
+  :th: :AB
+- "@id": :Herpes-genitalis-Infektion
+- "@id": :Molluscum-contagiosum-Infektion
+- "@id": :HPV-Infektion
+  schema:cause: :HPV
+- "@id": :HPV
+  :desc: "Typen 6 u. 11 führen zu Condyloma acuminata; High-risk-Typen: 16, 18, 31, 33, 35, 39, 45, 51, 52, 56, 58, 59, 66"
+- "@id": :Genitalulcus
+  :desc: "Syphilis: Ulcus durum -> Dunkelfeld-Mikroskopie, Serologie; Ulcus molle: Haemophilus ducreyi -> Gramfärbung, Mikroskopie; Peniskarzinom"
+- "@id": :Urogenitaltuberkulose
+  :desc: "lange Th.-refraktäre Pollakisurie, …"
+  :th:
+    - :Isoniazid
+    - :Rifampicin
+    - :Pyrazinamid
+    - :Ethambutol
+    - :Streptomycin # statt P. od. E (TODO)
+- "@id": :Schistosomiasis
+  :syn: Bilharziose
+  schema:cause:
+    - :Schistosoma_haematobium
+    - :Schistosoma_mansoni
+    - :Schistosoma_japonicum
+  :desc: "Prophylaxe: Im Sommer Finger nicht in Süßgewässer in endemischen Gebieten – Südamerika; Afrika, Korsika;  Asien: jp, cn, arabische Länder, … – stecken!"
+  :th: :Praziquantel
+
+
+
